@@ -4,8 +4,8 @@ const { getConfigPath, fetchABI} = require("./_helpers.js");
 const explorerOpUrl = "https://optimism-sepolia.blockscout.com/";
 const explorerBaseUrl = "https://base-sepolia.blockscout.com/";
 
-const rpcOptimism = `https://opt-sepolia.g.alchemy.com/v2/${process.env.OP_ALCHEMY_API_KEY}`;
-const rpcBase = `https://base-sepolia.g.alchemy.com/v2/${process.env.BASE_ALCHEMY_API_KEY}`;
+const rpcOptimism = process.env.OP_ALCHEMY_RPC;
+const rpcBase = process.env.BASE_ALCHEMY_RPC;
 
 async function getIbcApp (network) {
     try {
@@ -52,6 +52,7 @@ async function getDispatcher (network) {
 
             const opDispatcherAbi = await fetchABI(explorerUrl, dispatcherAddress);
             dispatcher = new ethers.Contract(dispatcherAddress, opDispatcherAbi, providerOptimism);
+
         } else if (network === "base") {
             explorerUrl = explorerBaseUrl;
             dispatcherAddress = config.proofsEnabled ? dispatcherAddress = process.env.BASE_DISPATCHER : dispatcherAddress = process.env.BASE_DISPATCHER_SIM;

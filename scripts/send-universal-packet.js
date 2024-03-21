@@ -26,13 +26,11 @@ async function main() {
     const channelId = sendConfig[`${networkName}`]["channelId"];
     const channelIdBytes = hre.ethers.encodeBytes32String(channelId);
     const timeoutSeconds = sendConfig[`${networkName}`]["timeout"];
-    
     // Send the packet
     await ibcApp.connect(accounts[0]).sendUniversalPacket(
         destPortAddr,
         channelIdBytes,
-        timeoutSeconds,
-        // Define and pass optionalArgs appropriately or remove if not needed
+        timeoutSeconds
     );
 }
 
